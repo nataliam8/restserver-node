@@ -26,6 +26,7 @@ const existeUsuarioPorId = async( id ) => {
     }
 }
 
+// Validar categoria
 const existeCategoriaPorId = async(id) => {
 
     const existeCategoria = await Categoria.findById(id);
@@ -34,6 +35,8 @@ const existeCategoriaPorId = async(id) => {
     }
 };
 
+
+// Validar producto
 const existeProductoPorId = async(id) => {
 
     const existeProducto = await Producto.findById(id);
@@ -42,10 +45,22 @@ const existeProductoPorId = async(id) => {
     }
 };
 
+// Validar colecciones permitidas
+const coleccionesPermitidas = ( coleccion = '', colecciones = []) => {
+    const incluida = colecciones.includes(coleccion);
+
+    if ( !incluida ) {
+        throw new Error(`La colección ${coleccion} no es permitida - ${colecciones}`)
+    }
+
+    return true;
+}
+
 module.exports = {
     esRoleValido,
     emailExiste,
     existeUsuarioPorId,
     existeCategoriaPorId,
-    existeProductoPorId
+    existeProductoPorId,
+    coleccionesPermitidas
 }
